@@ -39,6 +39,7 @@ body {
   grid-gap: 10px;
 }
 .btn {
+  outline: none;
   font-family: "Squada One", cursive;
   font-size: 1.5rem;
   cursor: pointer;
