@@ -37,7 +37,7 @@ function addNumber(n) {
 
 function setOperator(op) {
     screenRetain = false;
-    if (previousOperand != '0') evaluate();
+    if (previousOperand != '0' && currentOperation != '') evaluate();
     currentOperation = op;
     previousOperand = screen.textContent;
     console.log(`prev - ${previousOperand}`);
@@ -55,6 +55,7 @@ function evaluate() {
     if ( currentOperation === "-" ) result = subtract(previousOperand,currentOperand);
     if ( currentOperation === "+" ) result = add(+previousOperand,+currentOperand);
 
+    currentOperation = '';
     previousOperand = result;
     console.log("evaluate");
     setScreen(result);
