@@ -6,7 +6,7 @@ const btnDelete = document.querySelector("[data-delete]");
 const btnDot = document.querySelector("[data-dot]");
 const screen = document.querySelector(".screen");
 
-let currentOperation;
+let currentOperation = '';
 let previousOperand = 0, currentOperand;
 let screenRetain = true;
 
@@ -32,16 +32,15 @@ function addNumber(n) {
         setScreen(screen.textContent.concat(n));
     }
     currentOperand = screen.textContent;
-    if (previousOperand != '0') evaluate();
     console.log(`current - ${currentOperand}`);
 }
 
 function setOperator(op) {
     screenRetain = false;
-    previousOperand = screen.textContent;
+    if (previousOperand != '0') evaluate();
     currentOperation = op;
+    previousOperand = screen.textContent;
     console.log(`prev - ${previousOperand}`);
-    // evaluate();
 }
 
 function clear() {
