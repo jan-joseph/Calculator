@@ -13,7 +13,7 @@ let screenRetain = false;
 window.addEventListener('keydown', findKey);
 btnNumbers.forEach(btn => btn.addEventListener('click',() => addNumber(btn.textContent)));
 btnOperators.forEach(btn => btn.addEventListener('click', () => setOperator (btn.textContent)))
-btnEqual.addEventListener('click',() => evaluate())
+btnEqual.addEventListener('click',() => operate())
 btnClear.addEventListener('click', () => clear());
 btnDelete.addEventListener('click',() => deleteNumber());
 btnDot.addEventListener('click', () => addDot());
@@ -21,7 +21,7 @@ btnDot.addEventListener('click', () => addDot());
 function findKey(e) {
     if (e.key >= 0 && e.key <= 9) addNumber(e.key);
     if (e.key === ".") addDot();
-    if (e.key === "=" || e.key === "Enter") evaluate();
+    if (e.key === "=" || e.key === "Enter") operate();
     if (e.key === "Backspace") deleteNumber();
     if (e.key === "Escape") clear();   
     if (e.key === "+" || e.key === "-" || e.key === "*" || e.key === "/") setOperator(e.key);
@@ -29,22 +29,19 @@ function findKey(e) {
 
 function addNumber(n) {
     if(screen.textContent === '0' || !screenRetain) {
-        console.log("Some number");
         setScreen(n);
         screenRetain = true;
     } else {
         setScreen(screen.textContent.concat(n));
     }
     currentOperand = screen.textContent;
-    console.log(`current - ${currentOperand}`);
 }
 
 function setOperator(op) {
     screenRetain = false;
-    if (previousOperand != '0' && currentOperation != '') evaluate();
+    if (previousOperand != '0' && currentOperation != '') operate();
     currentOperation = op;
     previousOperand = screen.textContent;
-    console.log(`prev - ${previousOperand}`);
 }
 
 function clear() {
@@ -52,7 +49,7 @@ function clear() {
     previousOperand = 0;
 }
 
-function evaluate() {
+function operate() {
     let result;
     if ( currentOperation === "÷" || currentOperation === "/") result = divide(previousOperand,currentOperand);
     if ( currentOperation === "x" || currentOperation === "*") result = multiply(previousOperand,currentOperand);
@@ -61,10 +58,8 @@ function evaluate() {
 
     currentOperation = '';
     previousOperand = result;
-    console.log("evaluate");
     setScreen(result);
     screenRetain = false;
-    console.log(result);
 }
 function setScreen(n) {
     screen.textContent = n;
@@ -78,10 +73,8 @@ function deleteNumber() {
 function addDot() {
     if (screen.textContent.includes(".") && screenRetain) return;
     if (!screenRetain) {
-        console.log("decimal");
         screenRetain = true;
         setScreen("0.")
-        console.log(screen.textContent);
         return;
     }
     setScreen(screen.textContent + ".");
