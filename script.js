@@ -17,7 +17,7 @@ btnEqual.addEventListener('click',() => operate())
 btnClear.addEventListener('click', () => clear());
 btnDelete.addEventListener('click',() => deleteNumber());
 btnDot.addEventListener('click', () => addDot());
-
+// Finding the Keydown from the Keyboard
 function findKey(e) {
     if (e.key >= 0 && e.key <= 9) addNumber(e.key);
     if (e.key === ".") addDot();
@@ -26,7 +26,7 @@ function findKey(e) {
     if (e.key === "Escape") clear();   
     if (e.key === "+" || e.key === "-" || e.key === "*" || e.key === "/") setOperator(e.key);
 }
-
+// Adding the Keydown/Button clicked to the Screen Text
 function addNumber(n) {
     if(screen.textContent === '0' || !screenRetain) {
         setScreen(n);
@@ -36,19 +36,19 @@ function addNumber(n) {
     }
     currentOperand = screen.textContent;
 }
-
+// Set the operation to be performed when clicked on button/keyboard keydown
 function setOperator(op) {
     screenRetain = false;
     if (previousOperand != '0' && currentOperation != '') operate();
     currentOperation = op;
     previousOperand = screen.textContent;
 }
-
+// Clear the Screen
 function clear() {
     setScreen(0);
     previousOperand = 0;
 }
-
+// Actual Operate fucntion where all calculation and results are stored
 function operate() {
     let result;
     if ( currentOperation === "÷" || currentOperation === "/") result = divide(previousOperand,currentOperand);
@@ -61,15 +61,17 @@ function operate() {
     setScreen(result);
     screenRetain = false;
 }
+// Set the Screen Text Content with the passed parameter
 function setScreen(n) {
     screen.textContent = n;
 }
-
+// Deleting the LSB of the entered number in Screen Text Context
 function deleteNumber() {
     let result = screen.textContent.slice(0, -1);
     setScreen(result);
     currentOperand = result;
 }
+// Adding a Decimal Dot to the Number
 function addDot() {
     if (screen.textContent.includes(".") && screenRetain) return;
     if (!screenRetain) {
@@ -79,6 +81,7 @@ function addDot() {
     }
     setScreen(screen.textContent + ".");
 }
+// All mathematical operations to be performed
 const add = (a,b) => a+b;
 const subtract = (a,b) => a-b;
 const multiply = (a,b) => a*b;
