@@ -32,6 +32,7 @@ function addNumber(n) {
         setScreen(screen.textContent.concat(n));
     }
     currentOperand = screen.textContent;
+    if (previousOperand != '0') evaluate();
     console.log(`current - ${currentOperand}`);
 }
 
@@ -40,6 +41,7 @@ function setOperator(op) {
     previousOperand = screen.textContent;
     currentOperation = op;
     console.log(`prev - ${previousOperand}`);
+    // evaluate();
 }
 
 function clear() {
@@ -52,7 +54,7 @@ function evaluate() {
     if ( currentOperation === "÷" || currentOperation === "/") result = divide(previousOperand,currentOperand);
     if ( currentOperation === "x" || currentOperation === "*") result = multiply(previousOperand,currentOperand);
     if ( currentOperation === "-" ) result = subtract(previousOperand,currentOperand);
-    if ( currentOperation === "+" ) result = add(previousOperand,currentOperand);
+    if ( currentOperation === "+" ) result = add(+previousOperand,+currentOperand);
 
     previousOperand = result;
     console.log("evaluate");
